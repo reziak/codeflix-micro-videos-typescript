@@ -70,7 +70,7 @@ describe("Category unit tests", () =>{
     data.forEach(i => {
       const category = new Category(i.props, i.id as any);
       expect(category.id).not.toBeNull();
-      expect(category.id).toBeInstanceOf(UniqueEntityId);
+      expect(category.uniqueEntityId).toBeInstanceOf(UniqueEntityId);
     });
   });
 
@@ -137,7 +137,12 @@ describe("Category unit tests", () =>{
       description: "Before update"
     });
     category.update("Title After", "After update");
-    expect(category.name).toBe("Title After");
-    expect(category.description).toBe("After update");
+    
+    let props = omit(category.props, 'created_at');
+    expect(props).toStrictEqual({
+      name: 'Title After',
+      description: "After update",
+      is_active: true,
+    });
   })
 });
