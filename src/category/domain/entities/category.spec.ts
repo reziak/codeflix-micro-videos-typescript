@@ -118,4 +118,26 @@ describe("Category unit tests", () =>{
     category = new Category({ name: 'Movie', created_at });
     expect(category.created_at).toBe(created_at);
   });
+
+  it('should activate category', () => {
+    let category = new Category({ name: 'Movie', is_active: false});
+    category.activate();
+    expect(category.is_active).toBeTruthy();
+  });
+
+  it('should deactivate category', () => {
+    let category = new Category({ name: 'Movie' });
+    category.deactivate();
+    expect(category.is_active).toBeFalsy();
+  });
+
+  it('should update entity', () => {
+    let category = new Category({ 
+      name: "Title Before", 
+      description: "Before update"
+    });
+    category.update("Title After", "After update");
+    expect(category.name).toBe("Title After");
+    expect(category.description).toBe("After update");
+  })
 });

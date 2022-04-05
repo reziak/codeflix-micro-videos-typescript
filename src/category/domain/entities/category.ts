@@ -12,12 +12,16 @@ export class Category extends Entity<CategoryProperties> {
   constructor(public readonly props: CategoryProperties, id?: UniqueEntityId) {
     super(props, id);
     this.description = this.props.description;
-    this.is_active = this.props.is_active;
+    this.props.is_active = this.props.is_active ?? true;
     this.props.created_at = this.props.created_at ?? new Date();
   }
 
   get name() {
     return this.props.name;
+  }
+
+  private set name(value: string) {
+    this.props.name = value;
   }
 
   get description() {
@@ -38,5 +42,18 @@ export class Category extends Entity<CategoryProperties> {
 
   get created_at() {
     return this.props.created_at;
+  }
+
+  activate() {
+    this.props.is_active = true;
+  }
+
+  deactivate() {
+    this.props.is_active = false;
+  }
+
+  update(name: string, description: string) {
+    this.props.name = name;
+    this.props.description = description;
   }
 }
