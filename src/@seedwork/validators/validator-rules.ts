@@ -7,24 +7,35 @@ export default class ValidatorRules {
     return new ValidatorRules(value, property);
   }
 
-  required(): this {
+  required(): Omit<this, 'required'> {
     if(this.value === null || this.value === undefined || this.value === "") {
       throw new ValidationError(`The ${this.property} is required.`);
     }
     return this;
   }
 
-  string(): this {
-    if(typeof this.value !== "string") {
-      throw new ValidationError(`${this.property} must be a string.`);
+  string(): Omit<this, 'string'> {
+    if(!isEmpty(this.value) && typeof this.value !== "string") {
+      throw new ValidationError(`The ${this.property} must be a string.`);
     }
     return this;
   }
 
-  maxLenght(_max: number): this {
-    if(this.value.length > _max) {
-      throw new ValidationError(`${this.property} exceeds the maximum lenght of ${_max}.`);
+  maxLength(max: number): Omit<this, 'maxLength'> {
+    if(!isEmpty(this.value) && this.value.length > max) {
+      throw new ValidationError(`The ${this.property} exceeds the maximum lenght of ${max}.`);
     }
     return this;
   }
+
+  boolean(): Omit<this, 'boolean'> {
+    if(!isEmpty(this.value) && typeof this.value !== "boolean") {
+      throw new ValidationError(`The ${this.property} must be a boolean.`);
+    }
+    return this;
+  }
+}
+
+export function isEmpty(value: any) {
+  return value === undefined || value === null;
 }

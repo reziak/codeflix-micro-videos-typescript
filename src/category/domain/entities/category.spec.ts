@@ -4,10 +4,15 @@ import { omit } from 'lodash';
 import UniqueEntityId from '../../../@seedwork/domain/value-object/unique-entity-id.vo';
 
 describe("Category unit tests", () =>{
+  beforeEach(() => {
+    Category.validate = jest.fn();
+  });
+
   test('constructor of category', () => {
     // Triple A Test - Arrange / Act / Assert
     let category = new Category({ name: 'Movie'})
     let props = omit(category.props, 'created_at');
+    expect(Category.validate).toHaveBeenCalled();
     expect(props).toStrictEqual({
       name: 'Movie',
       description: null,
@@ -139,6 +144,7 @@ describe("Category unit tests", () =>{
     category.update("Title After", "After update");
     
     let props = omit(category.props, 'created_at');
+    expect(Category.validate).toHaveBeenCalledTimes(2);
     expect(props).toStrictEqual({
       name: 'Title After',
       description: "After update",
