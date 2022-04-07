@@ -2,27 +2,42 @@ import { Category } from "./category";
 describe("Category integration tests", () => {
   describe("create method", () =>{
     it("should be invalid when creating a category using name", () => {
-      expect(() => new Category({ name: null })).toThrow("The name is required.");
-      
-      expect(() => new Category({ name: "" })).toThrow("The name is required.");
-  
-      expect(() => new Category({ name: 5 as any })).toThrow("The name must be a string.");
-      
-      expect(() => new Category({ name: "t".repeat(256) })).toThrow("The name exceeds the maximum lenght of 255.");
+      expect(() => new Category({ name: null })).containsErrorMessages({
+        name: [
+          "name should not be empty",
+          "name must be a string",
+          "name must be shorter than or equal to 255 characters",
+        ],
+      });
+
+      expect(() => new Category({ name: "" })).containsErrorMessages({
+        name: ["name should not be empty"],
+      });
+
+      expect(() => new Category({ name: 5 as any })).containsErrorMessages({
+        name: [
+          "name must be a string",
+          "name must be shorter than or equal to 255 characters",
+        ],
+      });
+
+      expect(
+        () => new Category({ name: "t".repeat(256) })
+      ).containsErrorMessages({
+        name: ["name must be shorter than or equal to 255 characters"],
+      });
     });
     
     it("should be invalid when creating a category with wrong description", () => {
-      expect(() => new Category({ 
-        name: "valid", 
-        description: 5 as any, 
-      })).toThrow("The description must be a string.");
+      expect(() => new Category({ description: 5} as any)).containsErrorMessages({
+        description: ["description must be a string"]
+      });
     });
     
     it("should be invalid when creating a category with wrong is_active", () => {
-      expect(() => new Category({ 
-        name: "valid", 
-        is_active: "true" as any,
-      })).toThrow("The is_active must be a boolean.");
+      expect(() => new Category({ is_active: 1} as any)).containsErrorMessages({
+        is_active: ["is_active must be a boolean value"]
+      });
     });
 
     it("should create a valid category", () => {
@@ -38,19 +53,37 @@ describe("Category integration tests", () => {
   describe("update method", () => {
     it("should be invalid when updating a category using name", () => {
       const category = new Category({ name: "valid" });
-      expect(() => category.update(null, null)).toThrow("The name is required.");
-      
-      expect(() => category.update("", null)).toThrow("The name is required.");
-  
-      expect(() => category.update(5 as any, null)).toThrow("The name must be a string.");
-      
-      expect(() => category.update("t".repeat(256), null))
-        .toThrow("The name exceeds the maximum lenght of 255.");
+      expect(() => category.update(null, null)).containsErrorMessages({
+        name: [
+          "name should not be empty",
+          "name must be a string",
+          "name must be shorter than or equal to 255 characters",
+        ],
+      });
+
+      expect(() => category.update("", null)).containsErrorMessages({
+        name: ["name should not be empty"],
+      });
+
+      expect(() => category.update(5 as any, null)).containsErrorMessages({
+        name: [
+          "name must be a string",
+          "name must be shorter than or equal to 255 characters",
+        ],
+      });
+
+      expect(() =>
+        category.update("t".repeat(256), null)
+      ).containsErrorMessages({
+        name: ["name must be shorter than or equal to 255 characters"],
+      });
     });
     
     it("should be invalid when updating a category with wrong description", () => {
       const category = new Category({ name: "valid" });
-      expect(() => category.update("valid", 5 as any)).toThrow("The description must be a string.");
+      expect(() => category.update(null, 5 as any)).containsErrorMessages({
+        description: ["description must be a string"],
+      });
     });
 
     it("should update a valid category", () => {
