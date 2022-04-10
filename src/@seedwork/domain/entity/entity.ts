@@ -1,6 +1,6 @@
 import UniqueEntityId from '../value-object/unique-entity-id.vo'
 
-export default class Entity<Props> {
+export default class Entity<Props = any> {
   public readonly uniqueEntityId: UniqueEntityId;
 
   constructor(public readonly props: Props, id?: UniqueEntityId) {

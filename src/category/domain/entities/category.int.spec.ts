@@ -29,13 +29,13 @@ describe("Category integration tests", () => {
     });
     
     it("should be invalid when creating a category with wrong description", () => {
-      expect(() => new Category({ description: 5} as any)).containsErrorMessages({
+      expect(() => new Category({ description: 5 } as any)).containsErrorMessages({
         description: ["description must be a string"]
       });
     });
     
     it("should be invalid when creating a category with wrong is_active", () => {
-      expect(() => new Category({ is_active: 1} as any)).containsErrorMessages({
+      expect(() => new Category({ is_active: 1 } as any)).containsErrorMessages({
         is_active: ["is_active must be a boolean value"]
       });
     });
