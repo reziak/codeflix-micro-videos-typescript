@@ -96,7 +96,6 @@ describe("SearchParams Unit Tests", () => {
     ];
 
     arrange.forEach(i => {
-      console.log(i);
       expect(new SearchParams({sort: i.sort, sort_dir: i.sort_dir as any }).sort_dir).toBe(i.expected)
     });
   });

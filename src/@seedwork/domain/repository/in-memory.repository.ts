@@ -1,6 +1,12 @@
 import Entity from '../entity/entity';
 import uniqueEntityId from '../value-object/unique-entity-id.vo';
-import { RepositoryInterface, SearchableRepository, SearchParams, SearchResult, SortDirection } from './repository-contracts';
+import { 
+  RepositoryInterface, 
+  SearchableRepositoryInterface, 
+  SearchParams, 
+  SearchResult, 
+  SortDirection 
+} from './repository-contracts';
 import NotFoundError from '../errors/not-found.error';
 
 export abstract class InMemoryRepository<E extends Entity>
@@ -45,7 +51,7 @@ export abstract class InMemoryRepository<E extends Entity>
 
 export abstract class InMemorySearchableRepository<E extends Entity>
   extends InMemoryRepository<E>
-  implements SearchableRepository<E>
+  implements SearchableRepositoryInterface<E>
 {
   sortableFields: string[] = [];
 
