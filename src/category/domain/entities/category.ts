@@ -61,7 +61,7 @@ export class Category extends Entity<CategoryProperties> {
       description,
     });
     this.props.name = name;
-    this.props.description = description;
+    this.props.description = description ?? null;
   }
 
   static validate(props: CategoryProperties) {
