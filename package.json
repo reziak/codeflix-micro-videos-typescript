@@ -1,33 +1,34 @@
 {
-  "name": "micro-videos",
-  "version": "1.0.0",
-  "description": "admin do catalogo de videos",
+  "name": "micro-videos-typescript",
+  "version": "0.0.1",
+  "description": "",
   "main": "index.js",
+  "dependencies": {
+    "class-validator": "^0.13.2",
+    "jest": "^27.5.1",
+    "regenerator-runtime": "^0.13.9",
+    "uuid": "^8.3.2",
+    "create-ts-index": "^1.14.0"
+  },
+  "devDependencies": {},
+  "workspaces": [
+    "./src/@core",
+    "./src/nestjs"
+  ],
   "scripts": {
-    "ts-node": "ts-node",
-    "tsc": "tsc",
-    "tsc:check": "npm run tsc -- --noEmit",
-    "clean:tsc": "rm tsconfig.tsbuildinfo",
-    "test": "jest",
-    "test:cov": "npm run test -- --coverage"
+    "prestart:dev": "npm run build -w @reziak/micro-videos",
+    "start:dev": "npm run build:w -w @reziak/micro-videos & npm run start:dev -w nestjs",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reziak/codeflix-micro-videos-typescript.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "@swc/core": "^1.2.162",
-    "@swc/jest": "^0.2.20",
-    "@types/jest": "^27.4.1",
-    "@types/lodash": "^4.14.181",
-    "@types/node": "14.14.31",
-    "@types/uuid": "^8.3.4",
-    "jest": "^27.5.1",
-    "regenerator-runtime": "^0.13.9",
-    "ts-node": "^10.7.0",
-    "typescript": "^4.6.3"
+  "bugs": {
+    "url": "https://github.com/reziak/codeflix-micro-videos-typescript/issues"
   },
-  "dependencies": {
-    "class-validator": "^0.13.2",
-    "uuid": "^8.3.2"
-  }
+  "homepage": "https://github.com/reziak/codeflix-micro-videos-typescript#readme"
 }
